@@ -1,11 +1,32 @@
 import 'package:flutter/material.dart';
 
+import '../models/task.dart';
 import 'add_task_screen.dart';
 import '../widgets/tasks_list.dart';
 
-class TasksScreen extends StatelessWidget {
+class TasksScreen extends StatefulWidget {
   const TasksScreen({Key? key}) : super(key: key);
 
+  @override
+  State<TasksScreen> createState() => _TasksScreenState();
+}
+
+class _TasksScreenState extends State<TasksScreen> {
+  List<Task> tasks = [
+    Task(
+      title: 'Buy Milk',
+      isTaskCompleted: false,
+    ),
+    Task(
+      title: 'Buy Groceries',
+      isTaskCompleted: true,
+    ),
+    Task(
+      title: 'Buy anything',
+      isTaskCompleted: false,
+    ),
+  ];
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +36,12 @@ class TasksScreen extends StatelessWidget {
         onPressed: () {
           showModalBottomSheet(
             context: context,
-            builder: (context) => AddTaskScreen(),
+            builder: (context) => AddTaskScreen(
+              addTaskCallback: (newTask) {
+                setState(() => tasks.add(Task(title: newTask)));
+                Navigator.pop(context);
+              },
+            ),
           );
         },
       ),
@@ -26,7 +52,7 @@ class TasksScreen extends StatelessWidget {
             padding: const EdgeInsets.only(top: 60, left: 30, right: 30),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 CircleAvatar(
                   radius: 30,
                   backgroundColor: Colors.white,
@@ -45,9 +71,10 @@ class TasksScreen extends StatelessWidget {
                       color: Colors.white),
                 ),
                 Text(
-                  "12 Tasks",
+                  '${tasks.length} Tasks',
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
+                SizedBox(height: 10),
               ],
             ),
           ),
@@ -61,7 +88,7 @@ class TasksScreen extends StatelessWidget {
                   topRight: Radius.circular(20),
                 ),
               ),
-              child: TasksList(),
+              child: TasksList(tasks: tasks),
             ),
           ),
         ],
