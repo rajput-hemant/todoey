@@ -4,9 +4,9 @@ import 'task.dart';
 
 class TaskData extends ChangeNotifier {
   List<Task> _tasks = [
-    Task(title: 'Buy Milk'),
-    Task(title: 'Buy Groceries'),
-    Task(title: 'Buy anything'),
+    // Task(title: 'Buy Milk'),
+    // Task(title: 'Buy Groceries'),
+    // Task(title: 'Buy anything'),
   ];
 
   List<Task> get tasks {
@@ -25,6 +25,11 @@ class TaskData extends ChangeNotifier {
 
   void updateTask(Task task) {
     task.toggleTaskCompleted();
+    notifyListeners();
+  }
+
+  void deleteTask(Task task) {
+    _tasks.remove(task);
     notifyListeners();
   }
 }
