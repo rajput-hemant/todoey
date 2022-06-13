@@ -1,32 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../models/task.dart';
+import '../models/task_data.dart';
 import 'add_task_screen.dart';
 import '../widgets/tasks_list.dart';
 
-class TasksScreen extends StatefulWidget {
-  const TasksScreen({Key? key}) : super(key: key);
-
-  @override
-  State<TasksScreen> createState() => _TasksScreenState();
-}
-
-class _TasksScreenState extends State<TasksScreen> {
-  List<Task> tasks = [
-    Task(
-      title: 'Buy Milk',
-      isTaskCompleted: false,
-    ),
-    Task(
-      title: 'Buy Groceries',
-      isTaskCompleted: true,
-    ),
-    Task(
-      title: 'Buy anything',
-      isTaskCompleted: false,
-    ),
-  ];
-  
+class TasksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,12 +15,7 @@ class _TasksScreenState extends State<TasksScreen> {
         onPressed: () {
           showModalBottomSheet(
             context: context,
-            builder: (context) => AddTaskScreen(
-              addTaskCallback: (newTask) {
-                setState(() => tasks.add(Task(title: newTask)));
-                Navigator.pop(context);
-              },
-            ),
+            builder: (context) => AddTaskScreen(),
           );
         },
       ),
@@ -49,7 +23,8 @@ class _TasksScreenState extends State<TasksScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            padding: const EdgeInsets.only(top: 60, left: 30, right: 30),
+            padding:
+                const EdgeInsets.only(top: 60, left: 30, right: 30, bottom: 30),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -71,10 +46,9 @@ class _TasksScreenState extends State<TasksScreen> {
                       color: Colors.white),
                 ),
                 Text(
-                  '${tasks.length} Tasks',
+                  '${Provider.of<TaskData>(context).tasksCount} Tasks',
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
-                SizedBox(height: 10),
               ],
             ),
           ),
@@ -88,7 +62,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   topRight: Radius.circular(20),
                 ),
               ),
-              child: TasksList(tasks: tasks),
+              child: TasksList(),
             ),
           ),
         ],
