@@ -3,10 +3,17 @@ import 'package:provider/provider.dart';
 
 import '../models/task_data.dart';
 
-class AddTaskScreen extends StatelessWidget {
+class AddTaskScreen extends StatefulWidget {
+  @override
+  State<AddTaskScreen> createState() => _AddTaskScreenState();
+}
+
+class _AddTaskScreenState extends State<AddTaskScreen> {
+  final newTaskTitleController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    String? newTaskTite;
+  // String? newTaskTitle;
     return Container(
       color: Color(0xff757575),
       child: Container(
@@ -39,13 +46,14 @@ class AddTaskScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
               ),
-              onChanged: (newText) => newTaskTite = newText,
+              // onChanged: (newText) => newTaskTitle = newText,
+              controller: newTaskTitleController,
             ),
             Padding(padding: EdgeInsets.only(bottom: 20)),
             ElevatedButton(
               onPressed: () {
-                Provider.of<TaskData>(context, listen: false)
-                    .addTask(newTaskTite!);
+                setState(() => Provider.of<TaskData>(context, listen: false)
+                    .addTask(newTaskTitleController.text));
                 Navigator.pop(context);
               },
               child: Text(
