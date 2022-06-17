@@ -17,7 +17,8 @@ class TasksScreen extends StatelessWidget {
       title: Text(
         'Todoey',
         style: TextStyle(
-          fontSize: 50,
+          fontSize: 40,
+          fontFamily: "Quicksand",
           fontWeight: FontWeight.bold,
           color: Colors.white,
         ),
@@ -42,24 +43,31 @@ class TasksScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: Stack(
+          alignment: Alignment.topCenter,
           children: [
             Column(
               children: [
-                Align(
-                  alignment: Alignment.topCenter,
+                Expanded(
                   child: Text(
                     '${Provider.of<TaskData>(context).tasksCount} Tasks',
-                    style: TextStyle(fontSize: 18, color: Colors.white),
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontFamily: "Quicksand",
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
                 Expanded(
+                  flex: 7,
                   child: Container(
-                    height: (MediaQuery.of(context).size.height -
-                            appBar.preferredSize.height) *
-                        0.8,
-                    child: Image.asset('assets/images/bg.png'),
+                    child: Image.asset(
+                      'assets/images/bg.png',
+                      fit: BoxFit.fill,
+                    ),
                   ),
                 ),
+                Expanded(flex: 2, child: SizedBox())
               ],
             ),
             DraggableScrollableSheet(

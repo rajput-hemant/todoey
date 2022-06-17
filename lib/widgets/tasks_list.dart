@@ -29,7 +29,11 @@ class TasksList extends StatelessWidget {
             child: Text(
               'No Task Added Yet!',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 22,
+                fontFamily: "Quicksand",
+                fontWeight: FontWeight.w900,
+              ),
             ),
           );
   }

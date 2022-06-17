@@ -25,12 +25,14 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'Add Task',
+            'New Task',
             textAlign: TextAlign.center,
             style: TextStyle(
-                color: Colors.lightBlueAccent,
-                fontSize: 30,
-                fontWeight: FontWeight.bold),
+              color: Colors.lightBlueAccent,
+              fontSize: 30,
+              fontFamily: "Quicksand",
+              fontWeight: FontWeight.bold,
+            ),
           ),
           Padding(padding: EdgeInsets.only(bottom: 20)),
           TextField(
@@ -54,7 +56,11 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             },
             child: Text(
               'Add',
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(
+                fontSize: 20,
+                fontFamily: "Quicksand",
+                fontWeight: FontWeight.bold,
+              ),
             ),
             style: ElevatedButton.styleFrom(
               elevation: 10,
