@@ -13,61 +13,58 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
   @override
   Widget build(BuildContext context) {
-  // String? newTaskTitle;
+    // String? newTaskTitle;
     return Container(
-      color: Color(0xff757575),
-      child: Container(
-        padding: EdgeInsets.all(20.0),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
+      padding: EdgeInsets.all(20.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: null,
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            'Add Task',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: Colors.lightBlueAccent,
+                fontSize: 30,
+                fontWeight: FontWeight.bold),
           ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Add Task',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: Colors.lightBlueAccent,
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold),
+          Padding(padding: EdgeInsets.only(bottom: 20)),
+          TextField(
+            autofocus: true,
+            decoration: InputDecoration(
+              isDense: true,
+              labelText: 'Enter the Task',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
             ),
-            Padding(padding: EdgeInsets.only(bottom: 20)),
-            TextField(
-              autofocus: true,
-              decoration: InputDecoration(
-                labelText: 'Enter the Task',
-                isDense: true,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              ),
-              // onChanged: (newText) => newTaskTitle = newText,
-              controller: newTaskTitleController,
+            // onChanged: (newText) => newTaskTitle = newText,
+            controller: newTaskTitleController,
+          ),
+          Padding(padding: EdgeInsets.only(bottom: 20)),
+          ElevatedButton(
+            onPressed: () {
+              setState(() => Provider.of<TaskData>(context, listen: false)
+                  .addTask(newTaskTitleController.text));
+              Navigator.pop(context);
+            },
+            child: Text(
+              'Add',
+              style: TextStyle(fontSize: 20),
             ),
-            Padding(padding: EdgeInsets.only(bottom: 20)),
-            ElevatedButton(
-              onPressed: () {
-                setState(() => Provider.of<TaskData>(context, listen: false)
-                    .addTask(newTaskTitleController.text));
-                Navigator.pop(context);
-              },
-              child: Text(
-                'Add',
-                style: TextStyle(fontSize: 20),
-              ),
-              style: ElevatedButton.styleFrom(
-                primary: Colors.lightBlueAccent,
-                elevation: 10,
-                minimumSize: Size(0, 45),
-              ),
-            )
-          ],
-        ),
+            style: ElevatedButton.styleFrom(
+              elevation: 10,
+              primary: Colors.lightBlueAccent,
+              minimumSize: Size(0, 45),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+            ),
+          )
+        ],
       ),
     );
   }

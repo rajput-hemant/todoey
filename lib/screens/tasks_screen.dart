@@ -8,70 +8,76 @@ import '../widgets/tasks_list.dart';
 class TasksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final tasks = Provider.of<TaskData>(context).tasks;
+
+    var appBar = AppBar(
+      elevation: 0,
+      centerTitle: true,
+      backgroundColor: Colors.lightBlueAccent,
+      title: Text(
+        'Todoey',
+        style: TextStyle(
+          fontSize: 50,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+      ),
+    );
+
     return Scaffold(
+      appBar: appBar,
       backgroundColor: Colors.lightBlueAccent,
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            builder: (context) => SingleChildScrollView(
-              child: Container(
-                padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).viewInsets.bottom),
-                child: AddTaskScreen(),
-              ),
-            ),
-          );
-        },
+        child: const Icon(Icons.add, size: 33),
+        onPressed: () => showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          backgroundColor: Colors.transparent,
+          builder: (context) => SingleChildScrollView(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: AddTaskScreen(),
+          ),
+        ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding:
-                const EdgeInsets.only(top: 60, left: 30, right: 30, bottom: 30),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Column(
               children: [
-                CircleAvatar(
-                  radius: 30,
-                  backgroundColor: Colors.white,
-                  child: Icon(
-                    Icons.list,
-                    color: Colors.lightBlueAccent,
-                    size: 30,
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Text(
+                    '${Provider.of<TaskData>(context).tasksCount} Tasks',
+                    style: TextStyle(fontSize: 18, color: Colors.white),
                   ),
                 ),
-                SizedBox(height: 10),
-                Text(
-                  'Todoey',
-                  style: TextStyle(
-                      fontSize: 50,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
-                Text(
-                  '${Provider.of<TaskData>(context).tasksCount} Tasks',
-                  style: TextStyle(fontSize: 18, color: Colors.white),
+                Expanded(
+                  child: Container(
+                    height: (MediaQuery.of(context).size.height -
+                            appBar.preferredSize.height) *
+                        0.8,
+                    // alignment: Alignment.topCenter,
+                    child: Image.asset('assets/images/bg.png'),
+                  ),
                 ),
               ],
             ),
-          ),
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
+            DraggableScrollableSheet(
+              minChildSize: 0.19,
+              maxChildSize: tasks.isEmpty ? 0.19 : 0.95,
+              initialChildSize: tasks.isEmpty ? 0.19 : 0.5,
+              builder: (context, scrollController) => Container(
+                padding: const EdgeInsets.symmetric(vertical: 3),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
                 ),
+                child: TasksList(controller: scrollController),
               ),
-              child: TasksList(),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
