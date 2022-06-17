@@ -57,7 +57,6 @@ class TasksScreen extends StatelessWidget {
                     height: (MediaQuery.of(context).size.height -
                             appBar.preferredSize.height) *
                         0.8,
-                    // alignment: Alignment.topCenter,
                     child: Image.asset('assets/images/bg.png'),
                   ),
                 ),
@@ -68,7 +67,7 @@ class TasksScreen extends StatelessWidget {
               maxChildSize: tasks.isEmpty ? 0.19 : 0.95,
               initialChildSize: tasks.isEmpty ? 0.19 : 0.5,
               builder: (context, scrollController) => Container(
-                padding: const EdgeInsets.symmetric(vertical: 3),
+                padding: const EdgeInsets.symmetric(vertical: 8),
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(20)),

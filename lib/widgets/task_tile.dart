@@ -3,23 +3,25 @@ import 'package:flutter/material.dart';
 class TaskTile extends StatelessWidget {
   final isChecked;
   final String taskTitle;
+  final VoidCallback deleteCallback;
   final Function(bool?) checkboxCallback;
-  final VoidCallback longPressCallback;
 
   const TaskTile({
     super.key,
     required this.isChecked,
     required this.taskTitle,
+    required this.deleteCallback,
     required this.checkboxCallback,
-    required this.longPressCallback,
   });
 
   @override
   Widget build(BuildContext context) {
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
     return Card(
       elevation: 10,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      margin: const EdgeInsets.all(10),
+      margin: const EdgeInsets.all(5),
       child: ListTile(
         title: Text(
           taskTitle,
@@ -28,13 +30,29 @@ class TaskTile extends StatelessWidget {
             decoration: isChecked ? TextDecoration.lineThrough : null,
           ),
         ),
-        trailing: Checkbox(
+        leading: Checkbox(
           value: isChecked,
           activeColor: Colors.lightBlueAccent,
           onChanged: checkboxCallback,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         ),
-        onLongPress: longPressCallback,
+        trailing: isLandscape
+            ? OutlinedButton.icon(
+                icon: Icon(Icons.delete),
+                label: Text('Delete'),
+                onPressed: deleteCallback,
+                style: OutlinedButton.styleFrom(
+                  padding: EdgeInsets.all(11),
+                  primary: Colors.red,
+                  side: BorderSide(width: 1.0, color: Colors.red),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                ),
+              )
+            : IconButton(
+                onPressed: deleteCallback,
+                icon: Icon(Icons.delete, color: Colors.red),
+              ),
       ),
     );
   }
